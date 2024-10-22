@@ -8,8 +8,7 @@
         <li><RouterLink to="/CalendarView" class="text-white hover:underline">Calendrier</RouterLink></li>
         <li><RouterLink to="/ProgressView" class="text-white hover:underline">Suivi</RouterLink></li>
     </ul>
-    </nav>
-    <RouterLink/>   
+    </nav>  
 </template>
 
 <script>

@@ -9,7 +9,7 @@
     </div>
 </template>
 
-<script>
+<!-- <script>
 import Navbar from '@/components/Navbar.vue';
 import TaskForm from '@/components/TaskForm.vue';
 import TaskTable from '@/components/TaskTable.vue';
@@ -21,6 +21,7 @@ export default {
     TaskTable,
     },
     data() {
+    console.log(this.$store);
     return {
         tasks: this.$store.tasks,
         editingTask: this.$store.editingTask,
@@ -42,4 +43,21 @@ export default {
     }
     }
 };
+</script> -->
+
+<script setup>
+import Navbar from '@/components/Navbar.vue';
+import TaskForm from '@/components/TaskForm.vue';
+import TaskTable from '@/components/TaskTable.vue';
+
+import { useTaskStore } from '@/stores/taskStore';
+
+const store = useTaskStore();
+
+const tasks = store.tasks; 
+const editTaskData = store.editTaskData;
+const editingTask = store.editingTask;
+const addTask = store.addTask;
+const editTask = store.editTask;    
+const removeTask = store.removeTask;
 </script>
