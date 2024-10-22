@@ -1,34 +1,34 @@
 import { defineStore } from 'pinia';
 
 export const useTaskStore = defineStore('taskStore', {
-  state: () => ({
+state: () => ({
     tasks: [],
     editingTask: null,
     editTaskData: {
-      name: '',
-      priority: '',
-      dueDate: ''
+    name: '',
+    priority: '',
+    dueDate: ''
     },
-  }),
-  actions: {
+}),
+actions: {
     addTask(task) {
-      this.tasks.push({ ...task });
+    this.tasks.push({ ...task });
     },
     removeTask(index) {
-      this.tasks.splice(index, 1);
+    this.tasks.splice(index, 1);
     },
     editTask(index) {
-      this.editingTask = index;
-      this.editTaskData = { ...this.tasks[index] };
+    this.editingTask = index;
+    this.editTaskData = { ...this.tasks[index] };
     },
     updateTask() {
-      if (this.editTaskData.name && this.editTaskData.priority && this.editTaskData.dueDate) {
+    if (this.editTaskData.name && this.editTaskData.priority && this.editTaskData.dueDate) {
         this.tasks[this.editingTask] = { ...this.editTaskData };
         this.editingTask = null;
-      }
+    }
     },
     cancelEdit() {
-      this.editingTask = null;
+    this.editingTask = null;
     }
-  }
+}
 });

@@ -6,16 +6,16 @@ import ProgressView from '@/views/ProgressView.vue';
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: HomeView,
   },
   {
-    path: '/calendar',
-    name: 'calendar',
+    path: '/CalendarView',
+    name: 'Calendar',
     component: CalendarView,
   },
   {
-    path: '/progress',
+    path: '/ProgressView',
     name: 'progress',
     component: ProgressView,
   },

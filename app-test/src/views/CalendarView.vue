@@ -1,6 +1,5 @@
 <template>
   <div class="flex space-y-4">
-    <h1>Vue Calendrier des Tâches</h1>
     <vue-cal 
       :events="calendarEvents"
       :disable-views="['years', 'months']"
@@ -11,26 +10,30 @@
 </template>
 
 <script>
+import { useTaskStore } from '@/stores/taskStore'; // Import du store Pinia
 import VueCal from 'vue-cal';
-import 'vue-cal/dist/vuecal.css'; // Import CSS for VueCal
+import 'vue-cal/dist/vuecal.css'; // Import CSS pour VueCal
+import { computed } from 'vue'; // Import de computed pour réactivité
 
 export default {
   components: {
     VueCal,
   },
-  data() {
-    return {
-      calendarEvents: this.$store.tasks.map(task => ({
+  setup() {
+    const taskStore = useTaskStore(); // Initialisation du store
+
+    // Calcul des événements à partir des tâches
+    const calendarEvents = computed(() =>
+      taskStore.tasks.map(task => ({
         start: new Date(task.dueDate),
         end: new Date(task.dueDate),
         title: task.name,
-      })),
+      }))
+    );
+
+    return {
+      calendarEvents,
     };
-  },
-  computed: {
-    tasks() {
-      return this.$store.tasks;
-    },
   },
 };
 </script>

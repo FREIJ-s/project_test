@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-r from-stone-900 via-neutral-700 to-gray-900 min-h-screen">
+  <div class="bg-gradient-to-r from-stone-500 via-neutral-200 to-gray-500 min-h-screen">
     <Navbar />
     <br>
     <router-view />
