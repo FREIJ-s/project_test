@@ -23,7 +23,9 @@ actions: {
     },
     updateTask() {
     if (this.editTaskData.name && this.editTaskData.priority && this.editTaskData.dueDate) {
+        console.log(this.editTaskData, this.tasks);
         this.tasks[this.editingTask] = { ...this.editTaskData };
+        console.log(this.editTaskData, this.tasks);
         this.editingTask = null;
     }
     },
