@@ -58,8 +58,3 @@ export default {
   }
 };
 </script>
-<style>
-.basse { color: rgb(228, 25, 25); }
-.moyenne { color: rgb(255, 166, 0); }
-.haute { color: rgb(61, 180, 1); }
-</style>
