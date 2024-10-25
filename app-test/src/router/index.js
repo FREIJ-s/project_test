@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import CalendarView from '@/views/CalendarView.vue';
 import ProgressView from '@/views/ProgressView.vue';
-import LoginView from '@/views/LoginView.vue'; // Importer le LoginView
+import LoginView from '@/views/LoginView.vue'; 
 
 const routes = [
     {

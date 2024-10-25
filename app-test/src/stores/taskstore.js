@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'; 
+import { defineStore } from 'pinia';
 
 export const useTaskStore = defineStore('taskStore', {
   state: () => ({
-    tasks: [], // Initialise avec un tableau vide
+    tasks: [],
     editingTask: null,
     editTaskData: {
       name: '',
@@ -11,46 +11,70 @@ export const useTaskStore = defineStore('taskStore', {
       dueTime: '',
       status: '',
     },
-    currentUser: null, // Utilisateur actuellement connecté
+    currentUser: null,
   }),
   actions: {
-    // Charger les tâches depuis le localStorage et convertir les dates en objets Date
     loadTasksFromLocalStorage() {
       const storedTasks = localStorage.getItem('tasks');
       if (storedTasks) {
         this.tasks = JSON.parse(storedTasks).map(task => ({
           ...task,
-          dueDate: new Date(task.dueDate), // Convertir dueDate en objet Date
+          dueDate: new Date(task.dueDate),
         }));
       }
     },
 
     addTask(task) {
-      const taskDate = task.dueTime 
-        ? new Date(`${task.dueDate}T${task.dueTime}`) 
+      const taskDate = task.dueTime
+        ? new Date(`${task.dueDate}T${task.dueTime}`)
         : new Date(task.dueDate);
 
       const newTask = {
         ...task,
-        dueDate: taskDate, // Utiliser l'objet Date complet
+        dueDate: taskDate,
         status: 'en cours',
       };
 
       this.tasks.push(newTask);
-      this.saveTasksToLocalStorage(); // Sauvegarder les tâches dans localStorage après l'ajout
+      this.saveTasksToLocalStorage();
     },
 
     removeTask(index) {
       this.tasks.splice(index, 1);
-      this.saveTasksToLocalStorage(); // Sauvegarder les tâches après suppression
+      this.saveTasksToLocalStorage();
     },
 
+    // Charger la tâche en cours de modification
+    editTask(index) {
+      this.editingTask = index;
+      this.editTaskData = { ...this.tasks[index] };
+    },
+
+    // Mettre à jour une tâche et sauvegarder dans le localStorage
     updateTask() {
-      if (this.editTaskData.name && this.editTaskData.priority && this.editTaskData.dueDate) {
+      if (this.editingTask !== null) {
         this.tasks[this.editingTask] = { ...this.editTaskData };
         this.editingTask = null;
-        this.saveTasksToLocalStorage(); // Sauvegarder après mise à jour
+        this.editTaskData = {
+          name: '',
+          priority: '',
+          dueDate: '',
+          dueTime: '',
+          status: '',
+        };
+        this.saveTasksToLocalStorage();
       }
+    },
+
+    cancelEdit() {
+      this.editingTask = null;
+      this.editTaskData = {
+        name: '',
+        priority: '',
+        dueDate: '',
+        dueTime: '',
+        status: '',
+      };
     },
 
     updateTaskStatus(task) {
@@ -61,12 +85,6 @@ export const useTaskStore = defineStore('taskStore', {
       }
     },
 
-    // Sauvegarder les tâches dans localStorage
-    saveTasksToLocalStorage() {
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    },
-
-    // Gestion de la session utilisateur
     login(user) {
       this.currentUser = user;
       localStorage.setItem('currentUser', JSON.stringify(user));
@@ -83,9 +101,12 @@ export const useTaskStore = defineStore('taskStore', {
         this.currentUser = JSON.parse(storedUser);
       }
     },
+
+    saveTasksToLocalStorage() {
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    },
   },
 
-  // Appel de l'action pour charger les tâches lors de la création du store
   created() {
     this.loadTasksFromLocalStorage();
   },
